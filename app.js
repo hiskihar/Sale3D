@@ -81,17 +81,35 @@ let xLevPhase = 0.0;
 let yLevPhase = 0.0;
 let zLevPhase = 0.0;
 
+let xRotVel = 0;
+let yRotVel = 0;
+let zRotVel = 0;
+
+card1.rotation.y = 0;
+
+let cooldown = 0;
+
 // Ticker
 function animate() {
     requestAnimationFrame(animate);
 
-    turnCard(card1, turnPhase);
-    levitate(card1);
+    applyTurnForce(turnPhase);
+    applyReturnForce();
+    levitate()
+    dampenRotation();
+
+    card1.rotation.x += xRotVel;
+    card1.rotation.y += yRotVel;
+    card1.rotation.z += zRotVel;
 
     renderer.render(scene, camera);
 
     if (turnPhase < 1.0) {
         turnPhase += 0.01;
+    }
+
+    if (cooldown > 0) {
+        cooldown -= 0.01;
     }
 
     xLevPhase = (xLevPhase + 0.0008) % 1.0;
@@ -104,25 +122,32 @@ animate();
 
 renderer.compile(scene, camera);
 
-function turnCard(card, t) {
-    card.rotation.x = 0;
-    card.rotation.z = 0;
-    if (t <= 0.2005304) {
-        card.rotation.y = Math.PI * 2 * 6.77534196258 * t*t;
-    } else {
-        const newT = ((9/8)*t-(9/8));
-        card.rotation.y = Math.PI * 2 * (newT*newT*newT + 1)
-    }
+function applyTurnForce(t) {
+    yRotVel += 0.002 * (1 - Math.cos(2 * Math.PI * t));
 }
 
-function levitate(card) {
-    card.rotation.x += 0.1 * (Math.sin(2 * xLevPhase * Math.PI));
-    card.rotation.y += 0.1 * (Math.sin(2 * xLevPhase * Math.PI));
-    card.rotation.z += 0.03 * (Math.sin(2 * zLevPhase * Math.PI));
+function applyReturnForce() {
+    xRotVel += 0.001 * Math.sin(card1.rotation.x + Math.PI);
+    yRotVel += 0.001 * Math.sin(card1.rotation.y + Math.PI);
+    zRotVel += 0.001 * Math.sin(card1.rotation.z + Math.PI);
+}
+
+function dampenRotation() {
+    xRotVel *= 0.97;
+    yRotVel *= 0.97;
+    zRotVel *= 0.97;
+}
+
+function levitate() {
+    xRotVel += 0.00005 * (Math.sin(2 * xLevPhase * Math.PI));
+    yRotVel += 0.00005 * (Math.sin(2 * xLevPhase * Math.PI));
+    zRotVel += 0.00002 * (Math.sin(2 * zLevPhase * Math.PI));
 }
 
 function tryToPickCard() {
-    pickCard(cardIndex);
+    if (cooldown <= 0) {
+        pickCard(cardIndex);
+    }
 }
 
 const shuffle = (array) => {
@@ -134,6 +159,7 @@ const deck = [];
 for (let i = 0; i < 54; i++) {deck.push(i);} shuffle(deck);
 
 function pickCard(index) {
+    cooldown = 1.0;
     turnPhase = 0;
     setTimeout(
         changeCard,
