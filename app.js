@@ -17,12 +17,12 @@ const camera = new THREE.PerspectiveCamera(
 // Set camera 5 units away from the origin
 camera.position.z = 5;
 
-// Set initial textures
-let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('textures/x32/patakuningas@32x.png') });
-let backMaterial  = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('textures/x32/pakka@32x.png') });
+// Set initial texturemaps
+let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('texturemaps/x32/patakuningas@32x.png') });
+let backMaterial  = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('texturemaps/x32/pakka@32x.png') });
 let sideMaterial  = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
-// Create an array for the front textures
+// Create an array for the front texturemaps
 const cardTextures = [];
 for (let i = 0; i < 54; i++) {
     cardTextures.push(
@@ -30,7 +30,7 @@ for (let i = 0; i < 54; i++) {
     );
 }
 
-// Create an array for all textures for the card geometry
+// Create an array for all texturemaps for the card geometry
 const materials = [
     sideMaterial,
     sideMaterial,
@@ -41,17 +41,17 @@ const materials = [
 ];
 
 // Set bump and specular maps
-frontMaterial.bumpMap = new THREE.TextureLoader().load('textures/x32/pakka_bump@32x.png');
-backMaterial .bumpMap = new THREE.TextureLoader().load('textures/x32/pakka_bump@32x.png');
+frontMaterial.bumpMap = new THREE.TextureLoader().load('texturemaps/x32/pakka_bump@32x.png');
+backMaterial .bumpMap = new THREE.TextureLoader().load('texturemaps/x32/pakka_bump@32x.png');
 
-frontMaterial.specularMap = new THREE.TextureLoader().load('textures/x32/pakka_specular@32x.png');
-backMaterial .specularMap = new THREE.TextureLoader().load('textures/x32/pakka_specular@32x.png');
+frontMaterial.specularMap = new THREE.TextureLoader().load('texturemaps/x32/pakka_specular@32x.png');
+backMaterial .specularMap = new THREE.TextureLoader().load('texturemaps/x32/pakka_specular@32x.png');
 
 frontMaterial.shininess = 40;
 backMaterial .shininess = 40;
 
-frontMaterial.bumpScale = 0.5;
-backMaterial .bumpScale = 0.5;
+frontMaterial.bumpScale = 0.2;
+backMaterial .bumpScale = 0.2;
 
 frontMaterial.specular = new THREE.Color(0xbbccff);
 backMaterial .specular = new THREE.Color(0xbbccff);
@@ -71,7 +71,7 @@ light.castShadow = false;
 scene.add(light);
 
 // Add an ambient light
-const ambientLight = new THREE.AmbientLight(0x888888);
+const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(ambientLight);
 
 // Variables for the sine function controlling the turning and floating movement
@@ -148,7 +148,7 @@ function changeCard(index) {
 }
 
 function getCardImagePath(index) {
-    let path = "textures/"
+    let path = "texturemaps/"
     path = path.concat("x32/")
     if (cardIndex >= 0) {
         switch (Math.floor(index / 13)) {
