@@ -1,5 +1,10 @@
 let cardIndex = 0;
-let loader = new THREE.TextureLoader();
+let lastCardIndex = 0;
+
+/*
+█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
+█  Boring rendering stuff  █
+█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█*/
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0f1024);
@@ -17,8 +22,27 @@ const camera = new THREE.PerspectiveCamera(
 // Set camera 5 units away from the origin
 camera.position.z = 5;
 
+// Add a directional light
+const light = new THREE.DirectionalLight(0xffffff, 1.0);
+light.position.set(0, 0.8, 1);
+light.target.position.set(0, 0, 0);
+light.castShadow = false;
+scene.add(light);
+
+// Add an ambient light
+const ambientLight = new THREE.AmbientLight(0xffffff);
+scene.add(ambientLight);
+
+
+
+
+/*
+█▀▀▀▀▀▀▀▀▀▀▀▀▀█
+█  Materials  █
+█▄▄▄▄▄▄▄▄▄▄▄▄▄█*/
+
 // Set initial texturemaps
-let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('texturemaps/x32/patakuningas@32x.png') });
+//let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('texturemaps/x32/patakuningas@32x.png') });
 let backMaterial  = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('texturemaps/x32/pakka@32x.png') });
 let sideMaterial  = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
@@ -31,6 +55,7 @@ for (let i = 0; i < 54; i++) {
 }
 
 // Create an array for all texturemaps for the card geometry
+/*
 const materials = [
     sideMaterial,
     sideMaterial,
@@ -38,9 +63,10 @@ const materials = [
     sideMaterial,
     frontMaterial,
     backMaterial
-];
+];*/
 
 // Set bump and specular maps
+/*
 frontMaterial.bumpMap = new THREE.TextureLoader().load('texturemaps/x32/pakka_bump@32x.png');
 backMaterial .bumpMap = new THREE.TextureLoader().load('texturemaps/x32/pakka_bump@32x.png');
 
@@ -55,24 +81,45 @@ backMaterial .bumpScale = 0.2;
 
 frontMaterial.specular = new THREE.Color(0xbbccff);
 backMaterial .specular = new THREE.Color(0xbbccff);
+*/
+
+
+
+/*
+█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
+█  Cards and geometry  █
+█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█*/
 
 // Set the card shape
 const geometry = new THREE.BoxGeometry(3, 4.5, 0.02);
 
-// Create the card
-const card1 = new THREE.Mesh(geometry, materials);
-scene.add(card1);
+const shuffle = (array) => {return array.sort(() => Math.random() - 0.5);};
 
-// Add a directional light
-const light = new THREE.DirectionalLight(0xffffff, 1.0);
-light.position.set(0, 0.8, 1);
-light.target.position.set(0, 0, 0);
-light.castShadow = false;
-scene.add(light);
+let cards = [];
 
-// Add an ambient light
-const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(ambientLight);
+// Create the card meshes
+for (let i = 0; i < 54; i++) {
+    let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load(getCardImagePath(i)) });
+    const materials = [
+        sideMaterial,
+        sideMaterial,
+        sideMaterial,
+        sideMaterial,
+        frontMaterial,
+        backMaterial
+    ]
+    const card = new THREE.Mesh(geometry, materials);
+    card.position.y = -5;
+    scene.add(card);
+    cards.push(card);
+}
+
+
+
+
+
+
+
 
 // Variables for the sine function controlling the turning and floating movement
 let turnPhase = 1.0;
@@ -85,8 +132,6 @@ let xRotVel = 0;
 let yRotVel = 0;
 let zRotVel = 0;
 
-card1.rotation.y = 0;
-
 let cooldown = 0;
 
 // Ticker
@@ -95,12 +140,18 @@ function animate() {
 
     applyTurnForce(turnPhase);
     applyReturnForce();
-    levitate()
+    levitate();
     dampenRotation();
 
-    card1.rotation.x += xRotVel;
-    card1.rotation.y += yRotVel;
-    card1.rotation.z += zRotVel;
+
+
+    cards[cardIndex].rotation.x += xRotVel;
+    cards[cardIndex].rotation.y += yRotVel;
+    cards[cardIndex].rotation.z += zRotVel;
+
+    cards[cardIndex].rotation.x += xRotVel;
+    cards[cardIndex].rotation.y += yRotVel;
+    cards[cardIndex].rotation.z += zRotVel;
 
     renderer.render(scene, camera);
 
@@ -123,19 +174,19 @@ animate();
 renderer.compile(scene, camera);
 
 function applyTurnForce(t) {
-    yRotVel += 0.002 * (1 - Math.cos(2 * Math.PI * t));
+    yRotVel += 0.0014 * (1 - Math.cos(2 * Math.PI * t));
 }
 
 function applyReturnForce() {
-    xRotVel += 0.001 * Math.sin(card1.rotation.x + Math.PI);
-    yRotVel += 0.001 * Math.sin(card1.rotation.y + Math.PI);
-    zRotVel += 0.001 * Math.sin(card1.rotation.z + Math.PI);
+    xRotVel += 0.001 * Math.sin(cards[cardIndex].rotation.x + Math.PI);
+    yRotVel += 0.001 * Math.sin(cards[cardIndex].rotation.y + Math.PI);
+    zRotVel += 0.001 * Math.sin(cards[cardIndex].rotation.z + Math.PI);
 }
 
 function dampenRotation() {
-    xRotVel *= 0.97;
-    yRotVel *= 0.97;
-    zRotVel *= 0.97;
+    xRotVel *= 0.96;
+    yRotVel *= 0.96;
+    zRotVel *= 0.96;
 }
 
 function levitate() {
@@ -150,27 +201,33 @@ function tryToPickCard() {
     }
 }
 
-const shuffle = (array) => {
-    return array.sort(() => Math.random() - 0.5);
-};
-
 // Create an array of integers from 0 until 54 (card indices) and shuffle them
 const deck = [];
 for (let i = 0; i < 54; i++) {deck.push(i);} shuffle(deck);
 
-function pickCard(index) {
+function pickCard() {
     cooldown = 1.0;
     turnPhase = 0;
     setTimeout(
         changeCard,
-        350,
-        index
+        400
     )
-    cardIndex++;
 }
 
-function changeCard(index) {
-    frontMaterial.map = cardTextures[deck[index]];
+function changeCard() {
+
+    // Move current card down
+    cards[cardIndex].position.y = -5;
+
+    lastCardIndex = cardIndex;
+    cardIndex     = Math.floor(Math.random() * 54);
+
+    // Move next card up
+    cards[cardIndex].position.y = 0;
+
+    cards[cardIndex].rotation.x = cards[lastCardIndex].rotation.x;
+    cards[cardIndex].rotation.y = cards[lastCardIndex].rotation.y;
+    cards[cardIndex].rotation.z = cards[lastCardIndex].rotation.z;
 }
 
 function getCardImagePath(index) {
