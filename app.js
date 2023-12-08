@@ -98,8 +98,21 @@ const shuffle = (array) => {return array.sort(() => Math.random() - 0.5);};
 let cards = [];
 
 // Create the card meshes
+const bumpMap     = new THREE.TextureLoader().load('texturemaps/x32/grainy_bump.png');
+const specularMap = new THREE.TextureLoader().load('texturemaps/x32/full_specular.png');
+
 for (let i = 0; i < 54; i++) {
     let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load(getCardImagePath(i)) });
+    frontMaterial.bumpMap = bumpMap;
+    frontMaterial.specularMap = specularMap;
+    frontMaterial.shininess = 30;
+    frontMaterial.bumpScale = 0.1;
+    frontMaterial.specular = new THREE.Color(0xbbccff);
+    backMaterial.bumpMap = bumpMap;
+    backMaterial.specularMap = specularMap;
+    backMaterial.shininess = 30;
+    backMaterial.bumpScale = 0.1;
+    backMaterial.specular = new THREE.Color(0xbbccff);
     const materials = [
         sideMaterial,
         sideMaterial,
@@ -135,7 +148,11 @@ let zRotVel = 0;
 let cooldown = 0;
 
 // Ticker
-function animate() {
+let lastTimestamp = performance.now();
+function animate(timestamp) {
+    const deltaTime = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+
     requestAnimationFrame(animate);
 
     applyTurnForce(turnPhase);
@@ -156,11 +173,11 @@ function animate() {
     renderer.render(scene, camera);
 
     if (turnPhase < 1.0) {
-        turnPhase += 0.01;
+        turnPhase += 0.01 * (deltaTime / 7);
     }
 
     if (cooldown > 0) {
-        cooldown -= 0.01;
+        cooldown -= 0.01 * (deltaTime / 7);
     }
 
     xLevPhase = (xLevPhase + 0.0008) % 1.0;
