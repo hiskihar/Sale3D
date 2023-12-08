@@ -149,13 +149,15 @@ let cooldown = 0;
 
 // Ticker
 let lastTimestamp = performance.now();
+let deltaTime = 0;
 function animate(timestamp) {
-    const deltaTime = timestamp - lastTimestamp;
+    deltaTime = timestamp - lastTimestamp;
+    if (isNaN(deltaTime)) {deltaTime = 1}
     lastTimestamp = timestamp;
 
     requestAnimationFrame(animate);
 
-    applyTurnForce(turnPhase);
+    applyTurnForce();
     applyReturnForce();
     levitate();
     dampenRotation();
@@ -190,8 +192,8 @@ animate();
 
 renderer.compile(scene, camera);
 
-function applyTurnForce(t) {
-    yRotVel += 0.0014 * (1 - Math.cos(2 * Math.PI * t));
+function applyTurnForce() {
+    yRotVel += (deltaTime / 7) * 0.0014 * (1 - Math.cos(2 * Math.PI * turnPhase));
 }
 
 function applyReturnForce() {
