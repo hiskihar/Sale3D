@@ -22,12 +22,12 @@ const camera = new THREE.PerspectiveCamera(
 // Set camera 5 units away from the origin
 camera.position.z = 5;
 
-// Add a directional light
-const light = new THREE.DirectionalLight(0xffffff, 1.0);
-light.position.set(0, 0.8, 1);
-light.target.position.set(0, 0, 0);
-light.castShadow = false;
-scene.add(light);
+// Add directional lights
+const spotLight = new THREE.DirectionalLight(0xffffff, 1.0);
+spotLight.position.set(0, 0.8, 1);
+spotLight.target.position.set(0, 0, 0);
+spotLight.castShadow = false;
+scene.add(spotLight);
 
 // Add an ambient light
 const ambientLight = new THREE.AmbientLight(0xffffff);
@@ -90,6 +90,13 @@ backMaterial .specular = new THREE.Color(0xbbccff);
 █  Cards and geometry  █
 █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█*/
 
+// Create ground plane to hide the other cards
+const planeGeometry = new THREE.PlaneGeometry(5, 5);
+const plane = new THREE.Mesh(planeGeometry, new THREE.MeshStandardMaterial({ color: 0x0f1024 }))
+plane.position.z = -3;
+
+scene.add(plane);
+
 // Set the card shape
 const geometry = new THREE.BoxGeometry(3, 4.5, 0.02);
 
@@ -122,7 +129,7 @@ for (let i = 0; i < 54; i++) {
         backMaterial
     ]
     const card = new THREE.Mesh(geometry, materials);
-    card.position.y = -5;
+    card.position.z = -6;
     scene.add(card);
     cards.push(card);
 }
@@ -158,6 +165,7 @@ function animate(timestamp) {
     requestAnimationFrame(animate);
 
     applyTurnForce();
+    applyPressForce();
     applyReturnForce();
     levitate();
     dampenRotation();
@@ -179,7 +187,7 @@ function animate(timestamp) {
     }
 
     if (cooldown > 0) {
-        cooldown -= 0.01 * (deltaTime / 7);
+        cooldown -= 0.005 * (deltaTime / 7);
     }
 
     xLevPhase = (xLevPhase + 0.0008) % 1.0;
@@ -193,7 +201,17 @@ animate();
 renderer.compile(scene, camera);
 
 function applyTurnForce() {
-    yRotVel += (deltaTime / 7) * 0.0014 * (1 - Math.cos(2 * Math.PI * turnPhase));
+    xRotVel += (deltaTime / 7) * 0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
+    yRotVel += (deltaTime / 7) *  0.0014  * (1 - Math.cos(2 * Math.PI * turnPhase));
+    zRotVel += (deltaTime / 7) * 0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
+}
+
+function applyPressForce() {
+    if (turnPhase < .5) {
+        cards[cardIndex].position.z = - Math.sin(2 * Math.PI * turnPhase) * Math.sin(2 * Math.PI * turnPhase);
+    } else {
+        cards[cardIndex].position.z = 0;
+    }
 }
 
 function applyReturnForce() {
@@ -236,7 +254,7 @@ function pickCard() {
 function changeCard() {
 
     // Move current card down
-    cards[cardIndex].position.y = -5;
+    cards[cardIndex].position.z = -6;
 
     lastCardIndex = cardIndex;
     cardIndex     = Math.floor(Math.random() * 54);
@@ -247,6 +265,10 @@ function changeCard() {
     cards[cardIndex].rotation.x = cards[lastCardIndex].rotation.x;
     cards[cardIndex].rotation.y = cards[lastCardIndex].rotation.y;
     cards[cardIndex].rotation.z = cards[lastCardIndex].rotation.z;
+
+    cards[lastCardIndex].rotation.x = 0;
+    cards[lastCardIndex].rotation.y = 0;
+    cards[lastCardIndex].rotation.z = 0;
 }
 
 function getCardImagePath(index) {
