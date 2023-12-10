@@ -10,12 +10,12 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0f1024);
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth, window.innerHeight)
+renderer.setSize(window.innerWidth, 0.64 * window.innerHeight)
 document.body.appendChild(renderer.domElement);
 
 const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
+    67,
+    1.5625 * window.innerWidth / window.innerHeight,
     0.1,
     1000
 );
@@ -43,16 +43,17 @@ scene.add(ambientLight);
 
 // Set initial texturemaps
 //let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('texturemaps/x32/patakuningas@32x.png') });
-let backMaterial  = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('texturemaps/x32/pakka@32x.png') });
+let backMaterial  = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('texturemaps/color/pakka.png') });
 let sideMaterial  = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
 // Create an array for the front texturemaps
+/*
 const cardTextures = [];
 for (let i = 0; i < 54; i++) {
     cardTextures.push(
-        new THREE.TextureLoader().load(getCardImagePath(i))
+        new THREE.TextureLoader().load(getCardTexturePath(i))
     );
-}
+}*/
 
 // Create an array for all texturemaps for the card geometry
 /*
@@ -105,19 +106,20 @@ const shuffle = (array) => {return array.sort(() => Math.random() - 0.5);};
 let cards = [];
 
 // Create the card meshes
-const bumpMap     = new THREE.TextureLoader().load('texturemaps/x32/grainy_bump.png');
-const specularMap = new THREE.TextureLoader().load('texturemaps/x32/full_specular.png');
+const bumpMapFull      = new THREE.TextureLoader().load('texturemaps/bump/rakeinen_taysi.png');
+
+const backSpecularMap  = new THREE.TextureLoader().load('texturemaps/specular/pakka_specular.png');
 
 for (let i = 0; i < 54; i++) {
-    let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load(getCardImagePath(i)) });
-    frontMaterial.bumpMap = bumpMap;
-    frontMaterial.specularMap = specularMap;
-    frontMaterial.shininess = 30;
+    let frontMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load(getCardTexturePath("color", i)) });
+    frontMaterial.bumpMap = bumpMapFull;
+    frontMaterial.specularMap = new THREE.TextureLoader().load(getCardTexturePath("specular", i));
+    frontMaterial.shininess = 50;
     frontMaterial.bumpScale = 0.1;
     frontMaterial.specular = new THREE.Color(0xbbccff);
-    backMaterial.bumpMap = bumpMap;
-    backMaterial.specularMap = specularMap;
-    backMaterial.shininess = 30;
+    backMaterial.bumpMap = bumpMapFull;
+    backMaterial.specularMap = backSpecularMap;
+    backMaterial.shininess = 50;
     backMaterial.bumpScale = 0.1;
     backMaterial.specular = new THREE.Color(0xbbccff);
     const materials = [
@@ -152,14 +154,16 @@ let xRotVel = 0;
 let yRotVel = 0;
 let zRotVel = 0;
 
-let cooldown = 0;
+let cooldown = 0.5;
 
 // Ticker
 let lastTimestamp = performance.now();
 let deltaTime = 0;
 function animate(timestamp) {
     deltaTime = timestamp - lastTimestamp;
-    if (isNaN(deltaTime)) {deltaTime = 1}
+    if (isNaN(deltaTime)) {deltaTime = 17}
+    deltaTime = Math.max(deltaTime, 4)
+    deltaTime = Math.min(deltaTime, 36)
     lastTimestamp = timestamp;
 
     requestAnimationFrame(animate);
@@ -187,7 +191,7 @@ function animate(timestamp) {
     }
 
     if (cooldown > 0) {
-        cooldown -= 0.005 * (deltaTime / 7);
+        cooldown -= 0.007 * (deltaTime / 7);
     }
 
     xLevPhase = (xLevPhase + 0.0008) % 1.0;
@@ -201,9 +205,9 @@ animate();
 renderer.compile(scene, camera);
 
 function applyTurnForce() {
-    xRotVel += (deltaTime / 7) * 0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
+    xRotVel += (deltaTime / 7) * -0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
     yRotVel += (deltaTime / 7) *  0.0014  * (1 - Math.cos(2 * Math.PI * turnPhase));
-    zRotVel += (deltaTime / 7) * 0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
+    //zRotVel += (deltaTime / 7) * 0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
 }
 
 function applyPressForce() {
@@ -269,35 +273,77 @@ function changeCard() {
     cards[lastCardIndex].rotation.x = 0;
     cards[lastCardIndex].rotation.y = 0;
     cards[lastCardIndex].rotation.z = 0;
+
+    updateRule();
 }
 
-function getCardImagePath(index) {
-    let path = "texturemaps/"
-    path = path.concat("x32/")
+function getCardTexturePath(type, index) {
+    let path = "texturemaps/".concat(type).concat("/");
+
     if (cardIndex >= 0) {
         switch (Math.floor(index / 13)) {
-            case 0:  path = path.concat("hertta"); break;
-            case 1:  path = path.concat("ruutu" ); break;
-            case 2:  path = path.concat("risti" ); break;
-            case 3:  path = path.concat("pata"  ); break;}
+            case 0:  path = path.concat( "hertta" ); break;
+            case 1:  path = path.concat( "ruutu"  ); break;
+            case 2:  path = path.concat( "risti"  ); break;
+            case 3:  path = path.concat( "pata"   ); break;
+            case 4:  path = path.concat( "jokeri" ); break;}
         switch (index % 13) {
-            case 0:  path = path.concat("assa"      ); break;
-            case 1:  path = path.concat("kakkonen"  ); break;
-            case 2:  path = path.concat("kolmonen"  ); break;
-            case 3:  path = path.concat("nelonen"   ); break;
-            case 4:  path = path.concat("vitonen"   ); break;
-            case 5:  path = path.concat("kutonen"   ); break;
-            case 6:  path = path.concat("seitseman" ); break;
-            case 7:  path = path.concat("kahdeksan" ); break;
-            case 8:  path = path.concat("yhdeksan"  ); break;
-            case 9:  path = path.concat("kymmenen"  ); break;
-            case 10: path = path.concat("jatka"     ); break;
-            case 11: path = path.concat("kuningatar"); break;
-            case 12: path = path.concat("kuningas"  ); break;}
+            case 0:  path = path.concat( "A"  ); break;
+            case 1:  path = path.concat( "2"  ); break;
+            case 2:  path = path.concat( "3"  ); break;
+            case 3:  path = path.concat( "4"  ); break;
+            case 4:  path = path.concat( "5"  ); break;
+            case 5:  path = path.concat( "6"  ); break;
+            case 6:  path = path.concat( "7"  ); break;
+            case 7:  path = path.concat( "8"  ); break;
+            case 8:  path = path.concat( "9"  ); break;
+            case 9:  path = path.concat( "10" ); break;
+            case 10: path = path.concat( "J"  ); break;
+            case 11: path = path.concat( "Q"  ); break;
+            case 12: path = path.concat( "K"  ); break;}
     } else {
         path = path.concat("pakka");
     }
-    path = path.concat("@32x")
+    if (type !== "color") {
+        path = path.concat("_" + type);
+    }
     path = path.concat(".png")
     return path;
+}
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Load rules from the JSON file
+    fetch('rules/default.json')
+        .then(response => response.json())
+        .then(rules => {
+            // Store the rules in a global variable
+            window.cardRules = rules;
+        })
+        .catch(error => console.error('Sääntöjä ei voitu lukea:', error));
+});
+
+function updateRule() {
+    const rank = cardIndex % 13;
+
+    // Fetch the generic rule for the rank
+    const genericRule = window.cardRules && window.cardRules["rank"] && window.cardRules["rank"][rank];
+
+    // Fetch the special rule for the specific card
+    const specialRule = window.cardRules && window.cardRules["special"] && window.cardRules["special"][cardIndex];
+
+    // If a special rule exists, overwrite the generic rule
+    const finalRule = specialRule ? specialRule : genericRule;
+
+    if (finalRule) {
+        const { description, rules, penalty } = finalRule;
+        document.getElementById('title').textContent = description;
+        document.getElementById('rules').textContent = rules;
+        document.getElementById('penalty').textContent = "Rangaistus: " + penalty;
+    } else {
+        console.error(`No information found for card index ${cardIndex}`);
+    }
 }

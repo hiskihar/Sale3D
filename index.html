@@ -3,14 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>3d test</title>
-    <style>
-        body {
-            margin: 0;
-        }
-    </style>
+
+    <link href="style.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body onclick="tryToPickCard()">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
     <script src="app.js"></script>
+
+    <div class="info-flex-cont">
+        <p class="info-flex-elem" id="title">
+            Card name - description
+        </p>
+        <p class="info-flex-elem" id="rules">
+            Rules
+        </p>
+        <p class="info-flex-elem" id="penalty">
+            Rangaistus: kaksi huikkaa
+        </p>
+    </div>
 </body>
 </html>
