@@ -1,7 +1,7 @@
 body {
     margin: 0;
     background-color: #000000;
-    color: #000000;
+    color: #ffffff;
     font-family: 'Rethink Sans', sans-serif;
     text-align: left;
     user-select: none
@@ -18,7 +18,7 @@ canvas {
     align-items: center;
     max-width: 80vh;
     margin: 2vh auto;
-    background-color: #ffffff;
+    background-color: #1b1f31;
     border-radius: 1vh;
     box-shadow: 0 2px 20px 1px #000000;
 }
