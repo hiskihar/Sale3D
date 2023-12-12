@@ -1,4 +1,4 @@
-let cardIndex = 0;
+let cardIndex = 39;
 let lastCardIndex = 0;
 
 /*
@@ -7,7 +7,7 @@ let lastCardIndex = 0;
 █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█*/
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0f1024);
+scene.background = new THREE.Color(0x000000);
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, 0.64 * window.innerHeight)
@@ -93,7 +93,7 @@ backMaterial .specular = new THREE.Color(0xbbccff);
 
 // Create ground plane to hide the other cards
 const planeGeometry = new THREE.PlaneGeometry(5, 5);
-const plane = new THREE.Mesh(planeGeometry, new THREE.MeshStandardMaterial({ color: 0x0f1024 }))
+const plane = new THREE.Mesh(planeGeometry, new THREE.MeshStandardMaterial({ color: 0x000000 }))
 plane.position.z = -3;
 
 scene.add(plane);
@@ -115,12 +115,12 @@ for (let i = 0; i < 54; i++) {
     frontMaterial.bumpMap = bumpMapFull;
     frontMaterial.specularMap = new THREE.TextureLoader().load(getCardTexturePath("specular", i));
     frontMaterial.shininess = 50;
-    frontMaterial.bumpScale = 0.1;
+    frontMaterial.bumpScale = 0.04;
     frontMaterial.specular = new THREE.Color(0xbbccff);
     backMaterial.bumpMap = bumpMapFull;
     backMaterial.specularMap = backSpecularMap;
     backMaterial.shininess = 50;
-    backMaterial.bumpScale = 0.1;
+    backMaterial.bumpScale = 0.04;
     backMaterial.specular = new THREE.Color(0xbbccff);
     const materials = [
         sideMaterial,

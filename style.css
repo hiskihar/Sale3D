@@ -1,9 +1,9 @@
 body {
     margin: 0;
-    background-color: #0F1024;
-    color: #FFFFFF;
+    background-color: #000000;
+    color: #000000;
     font-family: 'Rethink Sans', sans-serif;
-    text-align: center;
+    text-align: left;
     user-select: none
 }
 
@@ -16,16 +16,21 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 100vh;
-    margin: 0 auto;
+    max-width: 80vh;
+    margin: 2vh auto;
+    background-color: #ffffff;
+    border-radius: 1vh;
+    box-shadow: 0 2px 20px 1px #000000;
 }
 
 .info-flex-elem {
-
+    width: 94%;
+    margin: 1.5vh
 }
 
 #title {
     font-size: 3.5vh;
+    font-weight: 700;
 }
 
 #rules {
