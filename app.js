@@ -1,6 +1,10 @@
 let cardIndex = 39;
 let lastCardIndex = 0;
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const lang = urlParams.get("lang");
+
 /*
 █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
 █  Boring rendering stuff  █
@@ -345,15 +349,23 @@ function getCardName(index) {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function() {
+    let rulesPath = "rules/default_";
+
+    if (lang === null) {
+        rulesPath = "rules/default_fi.json";
+    } else {
+        rulesPath = rulesPath.concat(lang).concat(".json");
+    }
+
     // Load rules from the JSON file
-    fetch('rules/default.json')
+    fetch(rulesPath)
         .then(response => response.json())
         .then(rules => {
             // Store the rules in a global variable
             window.cardRules = rules;
         })
-        .catch(error => console.error('Sääntöjä ei voitu lukea:', error));
+        .catch(error => console.error("Sääntöjä ei voitu lukea:", error));
 });
 
 function updateRule() {
@@ -368,11 +380,17 @@ function updateRule() {
     // If a special rule exists, overwrite the generic rule
     const finalRule = specialRule ? specialRule : genericRule;
 
+    let penaltyStr;
+    switch (lang) {
+        case "en": penaltyStr = "Penalty: "; break;
+        default:   penaltyStr = "Rangaistus: "; break;
+    }
+
     if (finalRule) {
         const { description, rules, penalty } = finalRule;
         document.getElementById('title').textContent = getCardName(cardIndex) + " - " + description;
         document.getElementById('rules').textContent = rules;
-        document.getElementById('penalty').textContent = "Rangaistus: " + penalty;
+        document.getElementById('penalty').textContent = penaltyStr + penalty;
     } else {
         console.error(`No information found for card index ${cardIndex}`);
     }
