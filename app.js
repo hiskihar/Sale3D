@@ -9,13 +9,15 @@ let lastCardIndex = 0;
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
 
+const margin = 12;
+
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth, 0.64 * window.innerHeight)
+renderer.setSize(window.innerWidth - 2 * margin, 0.64 * window.innerHeight)
 document.body.appendChild(renderer.domElement);
 
 const camera = new THREE.PerspectiveCamera(
     67,
-    1.5625 * window.innerWidth / window.innerHeight,
+    1.5625 * (window.innerWidth) / window.innerHeight,
     0.1,
     1000
 );
@@ -31,7 +33,9 @@ scene.add(spotLight);
 
 // Add an ambient light
 const ambientLight = new THREE.AmbientLight(0xffffff);
+ambientLight.intensity = 2;
 scene.add(ambientLight);
+
 
 
 
@@ -191,7 +195,7 @@ function animate(timestamp) {
     }
 
     if (cooldown > 0) {
-        cooldown -= 0.007 * (deltaTime / 7);
+        cooldown -= 0.006;
     }
 
     xLevPhase = (xLevPhase + 0.0008) % 1.0;
@@ -205,9 +209,9 @@ animate();
 renderer.compile(scene, camera);
 
 function applyTurnForce() {
-    xRotVel += (deltaTime / 7) * -0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
+    //xRotVel += (deltaTime / 7) * -0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
     yRotVel += (deltaTime / 7) *  0.0014  * (1 - Math.cos(2 * Math.PI * turnPhase));
-    //zRotVel += (deltaTime / 7) * 0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
+    zRotVel += (deltaTime / 7) * 0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
 }
 
 function applyPressForce() {
@@ -251,7 +255,7 @@ function pickCard() {
     turnPhase = 0;
     setTimeout(
         changeCard,
-        400
+        450
     )
 }
 
@@ -311,7 +315,33 @@ function getCardTexturePath(type, index) {
     return path;
 }
 
-
+function getCardName(index) {
+    let name = ""
+    switch (Math.floor(index / 13)) {
+        case 0:  name = name.concat("Hertta"); break;
+        case 1:  name = name.concat("Ruutu" ); break;
+        case 2:  name = name.concat("Risti" ); break;
+        case 3:  name = name.concat("Pata"  ); break;}
+    switch (index % 13) {
+        case 0:  name = name.concat("ässä"      ); break;
+        case 1:  name = name.concat("kakkonen"  ); break;
+        case 2:  name = name.concat("kolmonen"  ); break;
+        case 3:  name = name.concat("nelonen"   ); break;
+        case 4:  name = name.concat("vitonen"   ); break;
+        case 5:  name = name.concat("kutonen"   ); break;
+        case 6:  name = name.concat("seitsemän" ); break;
+        case 7:  name = name.concat("kahdeksan" ); break;
+        case 8:  name = name.concat("yhdeksän"  ); break;
+        case 9:  name = name.concat("kymmenen"  ); break;
+        case 10: name = name.concat("jätkä"     ); break;
+        case 11: name = name.concat("kuningatar"); break;
+        case 12: name = name.concat("kuningas"  ); break;}
+    switch (index) {
+        case 52: name = "Jokeri"; break;
+        case 53: name = "Jokeri"; break;
+    }
+    return name
+}
 
 
 
@@ -340,7 +370,7 @@ function updateRule() {
 
     if (finalRule) {
         const { description, rules, penalty } = finalRule;
-        document.getElementById('title').textContent = description;
+        document.getElementById('title').textContent = getCardName(cardIndex) + " - " + description;
         document.getElementById('rules').textContent = rules;
         document.getElementById('penalty').textContent = "Rangaistus: " + penalty;
     } else {

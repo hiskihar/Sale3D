@@ -1,14 +1,16 @@
 body {
-    margin: 0;
+    margin: 12px;
     background-color: #000000;
     color: #ffffff;
     font-family: 'Rethink Sans', sans-serif;
     text-align: left;
-    user-select: none
+    user-select: none;
+    overflow: hidden;
+    font-weight: 400;
 }
 
 canvas {
-    margin: auto;
+
 }
 
 .info-flex-cont {
@@ -16,21 +18,28 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 80vh;
-    margin: 2vh auto;
-    background-color: #1b1f31;
+    background-color: #0a0f17;
+    border: 2px #131c2a solid;
     border-radius: 1vh;
-    box-shadow: 0 2px 20px 1px #000000;
+
+    max-width: 80vh;
+    margin: 12px auto auto;
 }
 
 .info-flex-elem {
-    width: 94%;
-    margin: 1.5vh
+    margin: -2px 1vh 0 1vh;
+    padding: 0.5vh 1vh;
+    width: calc(100% - 2vh + 4px);
 }
 
 #title {
-    font-size: 3.5vh;
+    font-size: 2.5vh;
     font-weight: 700;
+    color: #000000;
+    background-color: #71b1ff;
+
+    border-radius: 1vh;
+    margin-bottom: 0.5vh;
 }
 
 #rules {
@@ -39,4 +48,7 @@ canvas {
 
 #penalty {
     font-size: 2.5vh;
+    font-style: italic;
+    color: lightcoral;
+    margin-bottom: 0.25vh;
 }

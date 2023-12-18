@@ -6,7 +6,7 @@
       "penalty": "juoma loppuun"
     },
     "1": {
-      "description": "Kaksi huikkaa",
+      "description": "Juo kaksi",
       "rules": "Kortin nostaja juo kaksi huikkaa.",
       "penalty": "kaksi huikkaa"
     },
@@ -16,7 +16,7 @@
       "penalty": "pelaajien määrä huikkia"
     },
     "3": {
-      "description": "Jaa neljä huikkaa",
+      "description": "Jaa neljä",
       "rules": "Kortin nostaja jakaa neljä huikkaa haluamilleen pelaajille.",
       "penalty": "neljä huikkaa"
     },
@@ -26,13 +26,13 @@
       "penalty": "kaksi huikkaa"
     },
     "5": {
-      "description": "Selvin juo kolme huikkaa",
+      "description": "Selvimmälle kolme",
       "rules": "Kaikki pelaajat osoittavat mielestään selvintä pelaajaa. Eniten osoituksia saanut juo kolme huikkaa.",
       "penalty": "kolme huikkaa"
     },
     "6": {
       "description": "Kategoria",
-      "rules": "Kortin nostaja keksii kategorian ja sanoo asian tästä kategoriasta. Edetään vasemmalle ja jokaisen on sanottava kyseiseen kategoriaan liittyvä asia. Epäonnistumisesta kolme huikkaa.",
+      "rules": "Kortin nostaja keksii kategorian ja sanoo asian tästä kategoriasta. Edetään vasemmalle ja jokaisen on sanottava kyseiseen kategoriaan liittyvä asia. Epäonnistumisesta kaksi huikkaa.",
       "penalty": "kaksi huikkaa"
     },
     "7": {
@@ -41,7 +41,7 @@
       "penalty": "kaksi huikkaa"
     },
     "8": {
-      "description": "Kaikki juovat kolme huikkaa",
+      "description": "Kaikille kolme",
       "rules": "Kaikki pelaajat juovat kolme huikkaa.",
       "penalty": "kolme huikkaa"
     },
@@ -51,9 +51,9 @@
       "penalty": "kaksi huikkaa"
     },
     "10": {
-      "description": "Kortin nostajan viereiset pelaajat juovat kaksi huikkaa",
-      "rules": "Kortin nostajan vasemmalla ja oikealla puolella istuvat pelaajat juovat kaksi huikkaa.",
-      "penalty": "kaksi huikkaa"
+      "description": "Viereisille huikat",
+      "rules": "Kortin nostajan vasemmalla ja oikealla puolella istuvat pelaajat juovat huikan.",
+      "penalty": "yksi huikka"
     },
     "11": {
       "description": "Lammas",
@@ -68,8 +68,8 @@
   },
   "special": {
     "51": {
-      "description": "Pata-Sale, kellotus",
-      "rules": "Kaikki pelaajat juovat juomansa loppuun niin nopeasti, kuin mahdollista.",
+      "description": "Kellotus",
+      "rules": "Harvinainen Pata-Sale. Kaikki pelaajat juovat juomansa loppuun niin nopeasti, kuin mahdollista.",
       "penalty": "juoma loppuun"
     },
     "2": {
