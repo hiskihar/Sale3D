@@ -10,20 +10,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body onclick="tryToPickCard()">
+<body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
     <script src="app.js"></script>
 
-    <div class="info-flex-cont">
+    <div class="info-flex-cont" id="info">
         <p class="info-flex-elem" id="title">
             Sale-juomapeli
         </p>
         <p class="info-flex-elem" id="rules">
-            Tervetuloa Sale-juomapeliin! Paina kääntääksesi kortin. Nuorin aloittaa.
+            Tervetuloa Sale-juomapeliin! Paina kääntääksesi kortin. Selvin aloittaa.
         </p>
         <p class="info-flex-elem" id="penalty">
             Rangaistus: kaksi huikkaa
         </p>
+        <div id="settings-icon-container">
+            <img class="icon" id="settings-icon" src="icons/settings.png" onclick="openSettings()">
+        </div>
+    </div>
+
+
+
+    <div id="settings">
+        <div id="close-settings-icon-container">
+            <img class="icon" id="close-settings-icon" src="icons/exit.png" onclick="closeSettings()">
+        </div>
+        <div class="settings-elem lang-settings">
+            <div class="lang" onclick="setLanguage('fi')">
+                <img class="icon language-icon" src="languages/fi/lang_icon.png">
+                FI
+            </div>
+            <div class="lang" onclick="setLanguage('en')">
+                <img class="icon language-icon" src="languages/en/lang_icon.png">
+                EN
+            </div>
+        </div>
     </div>
 </body>
 </html>

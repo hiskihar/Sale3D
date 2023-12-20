@@ -1,7 +1,17 @@
+:root {
+    --background-color: black;
+    --text-color: white;
+    --text-color-negative: black;
+    --text-accent-color: lightcoral;
+    --menu-color: #1d2031;
+    --menu-border-color: #262b3d;
+    --menu-dark-color: #131521;
+}
+
 body {
     margin: 12px;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: 'Rethink Sans', sans-serif;
     text-align: left;
     user-select: none;
@@ -14,32 +24,35 @@ canvas {
 }
 
 .info-flex-cont {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #0a0f17;
-    border: 2px #131c2a solid;
+    background-color: var(--menu-color);
+    border: 2px solid var(--menu-border-color);
     border-radius: 1vh;
 
     max-width: 80vh;
     margin: 12px auto auto;
+
+    transition: opacity ease 500ms;
 }
 
 .info-flex-elem {
     margin: -2px 1vh 0 1vh;
-    padding: 0.5vh 1vh;
+    padding: 0.2vh 1vh;
     width: calc(100% - 2vh + 4px);
 }
 
 #title {
     font-size: 2.5vh;
     font-weight: 700;
-    color: #000000;
+    color: var(--text-color-negative);
     background-color: #ffffff;
 
     border-radius: 1vh;
-    margin-bottom: 0.5vh;
+    margin-bottom: 0.7vh;
 }
 
 #rules {
@@ -50,5 +63,108 @@ canvas {
     font-size: 2.5vh;
     font-style: italic;
     color: lightcoral;
-    margin-bottom: 0.25vh;
+    margin-bottom: 0.2vh;
+}
+
+.icon {
+    width:  2vh;
+    height: 2vh;
+}
+
+#settings-icon-container {
+    padding: 0;
+    position: absolute;
+    right: 1.5vh;
+    bottom: 1.5vh;
+    width: 2vh;
+    height: 2vh;
+}
+
+#settings-icon {
+    cursor: pointer;
+    transition: 150ms ease-in-out;
+}
+
+#settings-icon:hover {
+    rotate: -30deg;
+}
+
+#settings-icon:active {
+    rotate: 30deg;
+}
+
+#penalty-and-settings {
+    display: flex;
+
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 0.5vh;
+}
+
+#settings {
+    position: relative;
+    display: none;
+    opacity: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--menu-color);
+    border: 2px solid var(--menu-border-color);
+    border-radius: 1vh;
+
+    max-width: 80vh;
+    margin: 12px auto auto;
+
+    transition: opacity ease 500ms;
+}
+
+.settings-elem {
+    margin: 0 1vh 0 1vh;
+    padding: 0.5vh 1vh;
+    width: calc(100% - 2vh + 4px);
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.lang {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 1vh 1vh 1vh 0;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--menu-border-color);
+    border-radius: 1vh;
+
+    padding: .3vh .5vh;
+
+    cursor: pointer;
+
+    transition: ease-in-out 100ms;
+}
+
+.lang:hover {
+    color: var(--text-accent-color);
+    background-color: var(--menu-dark-color);
+}
+
+.language-icon {
+    border-radius: 1vh;
+    margin-right: .5vh;
+}
+
+#close-settings-icon-container {
+    padding: 0;
+    position: absolute;
+    right: 1.5vh;
+    top: 1.5vh;
+    width: 2vh;
+    height: 2vh;
+}
+
+#close-settings-icon {
+    cursor: pointer;
+    transition: 150ms ease-in-out;
 }

@@ -1,9 +1,12 @@
 let cardIndex = 39;
 let lastCardIndex = 0;
 
+let gameStarted = false;
+
+let currentLanguage = "fi";
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const lang = urlParams.get("lang");
 
 /*
 █▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█
@@ -18,6 +21,8 @@ const margin = 12;
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth - 2 * margin, 0.64 * window.innerHeight)
 document.body.appendChild(renderer.domElement);
+
+renderer.domElement.addEventListener('click', tryToPickCard);
 
 const camera = new THREE.PerspectiveCamera(
     67,
@@ -101,8 +106,9 @@ backMaterial .specular = new THREE.Color(0xbbccff);
 
 // Create ground plane to hide the other cards
 const planeGeometry = new THREE.PlaneGeometry(5, 5);
-const plane = new THREE.Mesh(planeGeometry, new THREE.MeshStandardMaterial({ color: 0x000000 }))
+const plane = new THREE.Mesh(planeGeometry, new THREE.MeshBasicMaterial({ color: 0x000000, emissive: 0x000000 }))
 plane.position.z = -3;
+plane.material.shininess = 0;
 
 scene.add(plane);
 
@@ -212,6 +218,8 @@ animate();
 
 renderer.compile(scene, camera);
 
+setLanguage("fi");
+
 function applyTurnForce() {
     //xRotVel += (deltaTime / 7) * -0.00005 * (1 - Math.cos(2 * Math.PI * turnPhase));
     yRotVel += (deltaTime / 7) *  0.0014  * (1 - Math.cos(2 * Math.PI * turnPhase));
@@ -265,6 +273,7 @@ function pickCard() {
 
 function changeCard() {
 
+    gameStarted = true;
     // Move current card down
     cards[cardIndex].position.z = -6;
 
@@ -282,11 +291,14 @@ function changeCard() {
     cards[lastCardIndex].rotation.y = 0;
     cards[lastCardIndex].rotation.z = 0;
 
-    updateRule();
+    updateTextContent();
+    closeSettings();
 }
 
 function getCardTexturePath(type, index) {
     let path = "texturemaps/".concat(type).concat("/");
+
+    if (index > 51) return "jokeri".concat((index - 51).toString());
 
     if (cardIndex >= 0) {
         switch (Math.floor(index / 13)) {
@@ -319,79 +331,93 @@ function getCardTexturePath(type, index) {
     return path;
 }
 
-function getCardName(index) {
-    let name = ""
-    switch (Math.floor(index / 13)) {
-        case 0:  name = name.concat("Hertta"); break;
-        case 1:  name = name.concat("Ruutu" ); break;
-        case 2:  name = name.concat("Risti" ); break;
-        case 3:  name = name.concat("Pata"  ); break;}
-    switch (index % 13) {
-        case 0:  name = name.concat("ässä"      ); break;
-        case 1:  name = name.concat("kakkonen"  ); break;
-        case 2:  name = name.concat("kolmonen"  ); break;
-        case 3:  name = name.concat("nelonen"   ); break;
-        case 4:  name = name.concat("vitonen"   ); break;
-        case 5:  name = name.concat("kutonen"   ); break;
-        case 6:  name = name.concat("seitsemän" ); break;
-        case 7:  name = name.concat("kahdeksan" ); break;
-        case 8:  name = name.concat("yhdeksän"  ); break;
-        case 9:  name = name.concat("kymmenen"  ); break;
-        case 10: name = name.concat("jätkä"     ); break;
-        case 11: name = name.concat("kuningatar"); break;
-        case 12: name = name.concat("kuningas"  ); break;}
-    switch (index) {
-        case 52: name = "Jokeri"; break;
-        case 53: name = "Jokeri"; break;
-    }
-    return name
+
+
+function setLanguage(language) {
+    currentLanguage = language;
+    console.log("Language set to: " + currentLanguage);
+
+    updateRules();
+    // En tiiä miks tässä pitää olla viive mut olkoon
+    setTimeout(updateTextContent, 10);
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function() {
-    let rulesPath = "rules/default_";
-
-    if (lang === null) {
-        rulesPath = "rules/default_fi.json";
-    } else {
-        rulesPath = rulesPath.concat(lang).concat(".json");
-    }
-
-    // Load rules from the JSON file
-    fetch(rulesPath)
-        .then(response => response.json())
-        .then(rules => {
-            // Store the rules in a global variable
-            window.cardRules = rules;
-        })
-        .catch(error => console.error("Sääntöjä ei voitu lukea:", error));
+    updateRules();
 });
 
-function updateRule() {
+function updateRules() {
+    fetch("languages/" + currentLanguage + "/rules_default.json")
+        .then(response => response.json())
+        .then(rules => {
+            // Store the languages in a global variable
+            window.rules = rules;
+        })
+        .catch(error => {
+            console.error("Sääntöjä ei voitu lukea:", error);
+
+        });
+}
+
+function updateTextContent() {
     const rank = cardIndex % 13;
 
+    if (!gameStarted) {
+        const welcome = window.rules && window.rules["welcome"];
+        const { description, rules, penalty } = welcome;
+
+        document.getElementById('info').style.opacity = 0;
+
+        setTimeout(function () {
+            document.getElementById('title').  textContent = description;
+            document.getElementById('rules').  textContent = rules;
+            document.getElementById('penalty').textContent = penalty;
+
+            document.getElementById('info').style.opacity = 1;
+        }, 500)
+        return;
+    }
+
     // Fetch the generic rule for the rank
-    const genericRule = window.cardRules && window.cardRules["rank"] && window.cardRules["rank"][rank];
+    const genericRule = window.rules && window.rules["rank"] && window.rules["rank"][rank];
 
     // Fetch the special rule for the specific card
-    const specialRule = window.cardRules && window.cardRules["special"] && window.cardRules["special"][cardIndex];
+    const specialRule = window.rules && window.rules["special"] && window.rules["special"][cardIndex];
 
     // If a special rule exists, overwrite the generic rule
     const finalRule = specialRule ? specialRule : genericRule;
 
-    let penaltyStr;
-    switch (lang) {
-        case "en": penaltyStr = "Penalty: "; break;
-        default:   penaltyStr = "Rangaistus: "; break;
-    }
-
     if (finalRule) {
         const { description, rules, penalty } = finalRule;
-        document.getElementById('title').textContent = getCardName(cardIndex) + " - " + description;
-        document.getElementById('rules').textContent = rules;
-        document.getElementById('penalty').textContent = penaltyStr + penalty;
+
+        document.getElementById('info').style.opacity = 0;
+
+        setTimeout(function () {
+            document.getElementById('title').  textContent = description;
+            document.getElementById('rules').  textContent = rules;
+            document.getElementById('penalty').textContent = penalty;
+
+            document.getElementById('info').style.opacity = 1;
+            }, 500)
+        //document.getElementById('title').textContent = description;
+        //document.getElementById('rules').textContent = rules;
+        //document.getElementById('penalty').textContent = penalty;
     } else {
         console.error(`No information found for card index ${cardIndex}`);
     }
+}
+
+function openSettings() {
+
+    document.getElementById("settings").style.display = "flex";
+    setTimeout(function () {
+        document.getElementById('settings').style.opacity = 1;
+    }, 1);
+}
+
+function closeSettings() {
+    document.getElementById('settings').style.opacity = 0;
+    setTimeout(function () {
+        document.getElementById("settings").style.display = "none";
+    }, 500);
 }

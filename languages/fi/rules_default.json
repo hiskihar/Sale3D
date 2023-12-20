@@ -1,81 +1,91 @@
 {
+  "welcome": {
+    "description": "Sale-juomapeli",
+    "rules": "Tervetuloa Sale-juomapeliin! Paina kääntääksesi kortin. Selvin aloittaa.",
+    "penalty": "Rangaistus: kaksi huikkaa"
+  },
   "rank": {
     "0": {
       "description": "Vesiputous",
       "rules": "Kaikki aloittavat juomaan, ja lopettaa saa vasta, kun oikealla puolella istuva pelaaja on lopettanut, tai juoma loppuu. Kortin nostaja saa lopettaa, milloin haluaa.",
-      "penalty": "juoma loppuun"
+      "penalty": "Rangaistus: juoma loppuun"
     },
     "1": {
       "description": "Juo kaksi",
       "rules": "Kortin nostaja juo kaksi huikkaa.",
-      "penalty": "kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi huikkaa"
     },
     "2": {
       "description": "1, 2, 3...",
       "rules": "Kortin nostaja juo huikan, vasemmalla puolella istuva kaksi, hänen vasemmallaan kolme ja niin edespäin aina nostajaan saakka.",
-      "penalty": "pelaajien määrä huikkia"
+      "penalty": "Rangaistus: pelaajien määrä huikkia"
     },
     "3": {
       "description": "Jaa neljä",
       "rules": "Kortin nostaja jakaa neljä huikkaa haluamilleen pelaajille.",
-      "penalty": "neljä huikkaa"
+      "penalty": "Rangaistus: neljä huikkaa"
     },
     "4": {
       "description": "Riimi",
       "rules": "Kortin nostaja sanoo sanan, johon vasemalla puolella istuva keksii riimin, johon taas hänen vasemmallaan ja niin edespäin aina nostajaan saakka. Epäonnistumisesta kolme huikkaa.",
-      "penalty": "kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi huikkaa"
     },
     "5": {
       "description": "Selvimmälle kolme",
       "rules": "Kaikki pelaajat osoittavat mielestään selvintä pelaajaa. Eniten osoituksia saanut juo kolme huikkaa.",
-      "penalty": "kolme huikkaa"
+      "penalty": "Rangaistus: kolme huikkaa"
     },
     "6": {
       "description": "Kategoria",
       "rules": "Kortin nostaja keksii kategorian ja sanoo asian tästä kategoriasta. Edetään vasemmalle ja jokaisen on sanottava kyseiseen kategoriaan liittyvä asia. Epäonnistumisesta kaksi huikkaa.",
-      "penalty": "kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi huikkaa"
     },
     "7": {
       "description": "Sääntö",
       "rules": "Kortin nostaja keksii säännön, jota jokaisen tulee noudattaa tai poistaa halutessaa yhden aikaisemman säännön. Säännön rikkomisesta rangaistuksena kaksi huikkaa.",
-      "penalty": "kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi huikkaa"
     },
     "8": {
       "description": "Kaikille kolme",
       "rules": "Kaikki pelaajat juovat kolme huikkaa.",
-      "penalty": "kolme huikkaa"
+      "penalty": "Rangaistus: kolme huikkaa"
     },
     "9": {
       "description": "Kysymysmestari",
       "rules": "Kortin nostajasta tulee kysymysmestari ja mahdollinen vanha kysymysmestari luopuu tittelistään. Jos kysymysmestarin kysymykseen vastaa, joutuu juomaan kaksi huikkaa.",
-      "penalty": "kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi huikkaa"
     },
     "10": {
       "description": "Viereisille huikat",
       "rules": "Kortin nostajan vasemmalla ja oikealla puolella istuvat pelaajat juovat huikan.",
-      "penalty": "yksi huikka"
+      "penalty": "Rangaistus: yksi huikka"
     },
     "11": {
       "description": "Lammas",
       "rules": "Kortin nostaja valitsee pelaajan, josta tulee hänen lampaansa. Lammas joutuu juoda aina yhtä monta huikkaa, kuin kortin nostaja. Lampaita saa ketjuttaa halutessaan.",
-      "penalty": "kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi huikkaa"
     },
     "12": {
       "description": "Sauli \"Sale\" Niinistö",
       "rules": "Viimeinen pelaaja, joka huutaa \"Sale\" häviää, ja juo. Sanan sanomatta jättämisestäkin häviää.",
-      "penalty": "kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi huikkaa"
     }
   },
   "special": {
     "51": {
       "description": "Kellotus",
       "rules": "Harvinainen Pata-Sale. Kaikki pelaajat juovat juomansa loppuun niin nopeasti, kuin mahdollista.",
-      "penalty": "juoma loppuun"
+      "penalty": "Rangaistus: juoma loppuun"
     },
-    "2": {
+    "52": {
       "description": "Vesikortti",
       "rules": "Kaikki pelaajat juovat lasin vettä.",
-      "penalty": "lasi vettä"
+      "penalty": "Rangaistus: lasi vettä"
+    },
+    "53": {
+      "description": "Shottikortti",
+      "rules": "Kortin nostaja joutuu juoda shotin viinaa.",
+      "penalty": "Rangaistus: shotti viinaa"
     }
   }
 }

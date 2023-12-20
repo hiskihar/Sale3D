@@ -1,81 +1,91 @@
 {
+  "welcome": {
+    "description": "Sale drinking game",
+    "rules": "Welcome to Sale, the drinking game! Press to reveal a card. The most sober one goes first.",
+    "penalty": "Penalty: two sips"
+  },
   "rank": {
     "0": {
       "description": "Waterfall",
       "rules": "Everyone starts drinking, and you can stop only when the player to your right stops or the drink runs out. The cardholder can stop whenever they want.",
-      "penalty": "finish drink"
+      "penalty": "Penalty: finish drink"
     },
     "1": {
       "description": "Drink two",
       "rules": "The cardholder drinks two sips.",
-      "penalty": "two sips"
+      "penalty": "Penalty: two sips"
     },
     "2": {
       "description": "1, 2, 3...",
       "rules": "The cardholder drinks, the player to the left drinks two, the one to their left drinks three, and so on until it reaches the cardholder.",
-      "penalty": "number of sips based on players"
+      "penalty": "Penalty: number of sips based on players"
     },
     "3": {
       "description": "Deal four",
       "rules": "The cardholder deals four sips to chosen players.",
-      "penalty": "four sips"
+      "penalty": "Penalty: four sips"
     },
     "4": {
       "description": "Rhyme",
       "rules": "The cardholder says a word, and the player to the left comes up with a rhyme, then the one to their left, and so on until it reaches the cardholder. Three sips for failure.",
-      "penalty": "two sips"
+      "penalty": "Penalty: two sips"
     },
     "5": {
       "description": "Three for the sober one",
       "rules": "All players point to the person they think is the most sober. The one with the most votes drinks three sips.",
-      "penalty": "three sips"
+      "penalty": "Penalty: three sips"
     },
     "6": {
       "description": "Category",
       "rules": "The cardholder comes up with a category and says something related to that category. Progressing to the left, everyone must say something related. Two sips for failure.",
-      "penalty": "two sips"
+      "penalty": "Penalty: two sips"
     },
     "7": {
       "description": "Rule",
       "rules": "The cardholder creates a rule that everyone must follow or removes one previous rule if desired. Breaking the rule results in a penalty of two sips.",
-      "penalty": "two sips"
+      "penalty": "Penalty: two sips"
     },
     "8": {
       "description": "Three for all",
       "rules": "All players drink three sips.",
-      "penalty": "three sips"
+      "penalty": "Penalty: three sips"
     },
     "9": {
       "description": "Question master",
       "rules": "The cardholder becomes the Question Master, and any existing Question Master relinquishes the title. If someone answers the Question Master's question, they must drink two sips.",
-      "penalty": "two sips"
+      "penalty": "Penalty: two sips"
     },
     "10": {
       "description": "Adjacent sips",
       "rules": "Players sitting to the left and right of the cardholder drink a sip.",
-      "penalty": "one sip"
+      "penalty": "Penalty: one sip"
     },
     "11": {
       "description": "Sheep",
       "rules": "The cardholder chooses a player to be their sheep. The sheep must drink the same number of sips as the cardholder. Sheep can be chained if desired.",
-      "penalty": "two sips"
+      "penalty": "Penalty: two sips"
     },
     "12": {
       "description": "Sauli \"Sale\" Niinistö",
       "rules": "The last player to shout \"Sale\" loses and drinks. Remaining silent also results in a loss.",
-      "penalty": "two sips"
+      "penalty": "Penalty: two sips"
     }
   },
   "special": {
     "51": {
       "description": "Clocking",
       "rules": "Rare Spade-Sale. All players must finish their drinks as quickly as possible.",
-      "penalty": "finish drink"
+      "penalty": "Penalty: finish drink"
     },
-    "2": {
-      "description": "Water Card",
+    "52": {
+      "description": "Water card",
       "rules": "All players drink a glass of water.",
-      "penalty": "glass of water"
+      "penalty": "Penalty: glass of water"
+    },
+    "53": {
+      "description": "Shot card",
+      "rules": "The cardholder must take a shot of booze.",
+      "penalty": "Penalty: shot of booze"
     }
   }
 }
