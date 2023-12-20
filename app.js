@@ -339,7 +339,7 @@ function setLanguage(language) {
 
     updateRules();
     // En tiiä miks tässä pitää olla viive mut olkoon
-    setTimeout(updateTextContent, 10);
+    setTimeout(updateTextContent, 50);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
