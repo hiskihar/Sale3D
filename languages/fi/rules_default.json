@@ -63,12 +63,12 @@
     "11": {
       "description": "Lammas",
       "rules": "Kortin nostaja valitsee pelaajan, josta tulee hänen lampaansa. Lammas joutuu juoda aina yhtä monta huikkaa, kuin kortin nostaja. Lampaita saa ketjuttaa halutessaan.",
-      "penalty": "Rangaistus: kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi höröä"
     },
     "12": {
       "description": "Sauli \"Sale\" Niinistö",
       "rules": "Viimeinen pelaaja, joka huutaa \"Sale\" häviää, ja juo. Sanan sanomatta jättämisestäkin häviää.",
-      "penalty": "Rangaistus: kaksi huikkaa"
+      "penalty": "Rangaistus: kaksi höbää"
     }
   },
   "special": {

@@ -278,7 +278,9 @@ function changeCard() {
     cards[cardIndex].position.z = -6;
 
     lastCardIndex = cardIndex;
-    cardIndex     = Math.floor(Math.random() * 54);
+    do {
+        cardIndex = Math.floor(Math.random() * 54);
+    } while (lastCardIndex === cardIndex);
 
     // Move next card up
     cards[cardIndex].position.y = 0;
@@ -298,32 +300,31 @@ function changeCard() {
 function getCardTexturePath(type, index) {
     let path = "texturemaps/".concat(type).concat("/");
 
-    if (index > 51) return "jokeri".concat((index - 51).toString());
-
-    if (cardIndex >= 0) {
-        switch (Math.floor(index / 13)) {
-            case 0:  path = path.concat( "hertta" ); break;
-            case 1:  path = path.concat( "ruutu"  ); break;
-            case 2:  path = path.concat( "risti"  ); break;
-            case 3:  path = path.concat( "pata"   ); break;
-            case 4:  path = path.concat( "jokeri" ); break;}
-        switch (index % 13) {
-            case 0:  path = path.concat( "A"  ); break;
-            case 1:  path = path.concat( "2"  ); break;
-            case 2:  path = path.concat( "3"  ); break;
-            case 3:  path = path.concat( "4"  ); break;
-            case 4:  path = path.concat( "5"  ); break;
-            case 5:  path = path.concat( "6"  ); break;
-            case 6:  path = path.concat( "7"  ); break;
-            case 7:  path = path.concat( "8"  ); break;
-            case 8:  path = path.concat( "9"  ); break;
-            case 9:  path = path.concat( "10" ); break;
-            case 10: path = path.concat( "J"  ); break;
-            case 11: path = path.concat( "Q"  ); break;
-            case 12: path = path.concat( "K"  ); break;}
+    if (index > 51) {
+        path = path.concat("jokeri").concat((index - 51).toString());
     } else {
-        path = path.concat("pakka");
-    }
+        if (cardIndex >= 0) {
+            switch (Math.floor(index / 13)) {
+                case 0:  path = path.concat( "hertta" ); break;
+                case 1:  path = path.concat( "ruutu"  ); break;
+                case 2:  path = path.concat( "risti"  ); break;
+                case 3:  path = path.concat( "pata"   ); break;
+                case 4:  path = path.concat( "jokeri" ); break;}
+            switch (index % 13) {
+                case 0:  path = path.concat( "A"  ); break;
+                case 1:  path = path.concat( "2"  ); break;
+                case 2:  path = path.concat( "3"  ); break;
+                case 3:  path = path.concat( "4"  ); break;
+                case 4:  path = path.concat( "5"  ); break;
+                case 5:  path = path.concat( "6"  ); break;
+                case 6:  path = path.concat( "7"  ); break;
+                case 7:  path = path.concat( "8"  ); break;
+                case 8:  path = path.concat( "9"  ); break;
+                case 9:  path = path.concat( "10" ); break;
+                case 10: path = path.concat( "J"  ); break;
+                case 11: path = path.concat( "Q"  ); break;
+                case 12: path = path.concat( "K"  ); break;}}}
+
     if (type !== "color") {
         path = path.concat("_" + type);
     }
