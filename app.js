@@ -338,6 +338,8 @@ function setLanguage(language) {
     currentLanguage = language;
     console.log("Language set to: " + currentLanguage);
 
+    closeSettings();
+
     updateRules();
     // En tiiä miks tässä pitää olla viive mut olkoon
     setTimeout(updateTextContent, 50);
