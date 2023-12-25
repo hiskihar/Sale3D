@@ -216,6 +216,8 @@ function animate(timestamp) {
 // Start the animation
 animate();
 
+setTimeout(updateRules, 3000)
+
 renderer.compile(scene, camera);
 
 setLanguage("fi");
@@ -340,11 +342,14 @@ function setLanguage(language) {
 
     closeSettings();
 
+    // :DD
     updateRules();
-    // En tiiä miks tässä pitää olla viive mut olkoon
-    setTimeout(updateTextContent, 50);
+    setTimeout(updateTextContent, 100);
+    setTimeout(updateRules, 200);
+    setTimeout(updateTextContent, 300);
 }
 
+// Jostain syystä tää ei ikinä totetudu
 document.addEventListener("DOMContentLoaded", function() {
     updateRules();
 });
@@ -424,3 +429,5 @@ function closeSettings() {
         document.getElementById("settings").style.display = "none";
     }, 500);
 }
+
+setLanguage('fi');
