@@ -68,7 +68,7 @@
     "12": {
       "description": "Sauli \"Sale\" Niinistö",
       "rules": "The last player to shout \"Sale\" loses and drinks. Remaining silent also results in a loss.",
-      "penalty": "Penalty: two sips"
+      "penalty": "Penalty: six sips"
     }
   },
   "special": {
