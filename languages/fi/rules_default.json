@@ -68,7 +68,7 @@
     "12": {
       "description": "Sauli \"Sale\" Niinistö",
       "rules": "Viimeinen pelaaja, joka huutaa \"Sale\" häviää, ja juo. Sanan sanomatta jättämisestäkin häviää.",
-      "penalty": "Rangaistus: kaksi höbää"
+      "penalty": "Rangaistus: kuusi höbää"
     }
   },
   "special": {
