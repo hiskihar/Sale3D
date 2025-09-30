@@ -78,9 +78,9 @@
       "penalty": "Rangaistus: juoma loppuun"
     },
     "52": {
-      "description": "Vesikortti",
-      "rules": "Kaikki pelaajat juovat lasin vettä.",
-      "penalty": "Rangaistus: lasi vettä"
+      "description": "Satajuoma",
+      "rules": "Kaikkien pelaajien pitää tuhota yhteensä sata hörppyä. Hörpyt saa jakaa vapaasti.",
+      "penalty": "Rangaistus: sata hörppyä"
     },
     "53": {
       "description": "Shottikortti",
