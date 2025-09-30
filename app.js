@@ -26,7 +26,7 @@ renderer.domElement.addEventListener('click', tryToPickCard);
 document.body.addEventListener('keypress', keyPress);
 
 function keyPress(e) {
-    if (e.code === 32) {
+    if (e.code === 'Space') {
         tryToPickCard;
     }
 }
