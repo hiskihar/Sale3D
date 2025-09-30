@@ -24,6 +24,7 @@ document.body.appendChild(renderer.domElement);
 
 renderer.domElement.addEventListener('click', tryToPickCard);
 document.body.addEventListener("keydown", function (e) {
+    console.log(e.code);
     if (e.code === "Space") {
         tryToPickCard();
     }
