@@ -23,6 +23,13 @@ renderer.setSize(window.innerWidth - 2 * margin, 0.64 * window.innerHeight)
 document.body.appendChild(renderer.domElement);
 
 renderer.domElement.addEventListener('click', tryToPickCard);
+document.body.addEventListener('keypress', keyPress);
+
+function keyPress(e) {
+    if (e.code === 32) {
+        tryToPickCard;
+    }
+}
 
 const camera = new THREE.PerspectiveCamera(
     67,
